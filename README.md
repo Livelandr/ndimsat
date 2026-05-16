@@ -12,13 +12,22 @@ Here some stuff generated with it (ported in blender for animation).
 
 ## Tesseract
 W axis rotation with direct projection
-https://github.com/user-attachments/assets/8ab7afd9-d8c5-4507-8deb-a8d742ef9d3b
+
+
+https://github.com/user-attachments/assets/32e75f57-2d47-4db9-8003-5ad558db5da2
+
 
 W axis rotation with slicing
-https://github.com/user-attachments/assets/db8cd195-fe5e-4917-93e6-cd0da078cab7
+
+
+https://github.com/user-attachments/assets/bc206470-33d8-44cd-9d65-3dcff061e1ef
+
 
 Classical projection
-https://github.com/user-attachments/assets/ea790557-9c49-429e-9ecd-1ef2b8fb3078
+
+
+https://github.com/user-attachments/assets/b257c5c9-feac-41b1-8ead-cf01141ad779
+
 
 # Hypersphere (3-sphere)
 https://github.com/user-attachments/assets/08886ed5-b25c-4986-8da9-0d35404d401c
