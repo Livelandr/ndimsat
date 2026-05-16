@@ -36,6 +36,8 @@ https://github.com/user-attachments/assets/08886ed5-b25c-4986-8da9-0d35404d401c
 https://github.com/user-attachments/assets/079b8f4a-a38a-4ce4-8237-d084169022e7
 
 # Newell's ---===HYPERTEAPOT=====---
+1 Teapot, 3 slices (W 0, W 0.5, W 1)
+<img width="1069" height="689" alt="Discord_tmBRlxhu4K" src="https://github.com/user-attachments/assets/825787e9-28c8-4b84-8615-c274e32584bb" />
 
 
 https://github.com/user-attachments/assets/1d393150-261b-4e99-9721-591bc1e33e6c
