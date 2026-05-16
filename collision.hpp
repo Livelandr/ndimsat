@@ -1,12 +1,9 @@
+#pragma once
+
+#include "base.hpp"
+
 namespace NDSAT {
-	struct Point {
-		std::vector<double> dim;
-
-		Point() {};
-
-		template<typename... Args>
-		Point(Args... args) : dim{ static_cast<double>(args)... } {}
-	};
+	namespace Collision {
 
 	struct D2Point {
 		double x;
@@ -23,6 +20,9 @@ namespace NDSAT {
 		}
 	};
 
+	double linearExtrapolation(double a, double b, double d) {
+		return a + (b - a) * d;
+	}
 
 	inline double linear(D2Point a, D2Point b, double x) {
 		return a.y + (b.y - a.y) / (b.x - a.x) * (x - a.x);
@@ -98,6 +98,10 @@ namespace NDSAT {
 		return false;
 	}
 
+	Point findPlaneIntersection(Point A, Point B, Point C, Point D, Point n, Point m, size_t dimensions = 3) {
+		return Point(0, 0, 0);
+	}
+
 	size_t countProjectionEdgesIntersections(Point a, Point b, Point c, Point d, size_t dimensions = 3) {
 		D2Point pA, pB, pC, pD;
 		size_t projections = 0;
@@ -157,4 +161,43 @@ namespace NDSAT {
 	bool doEdgeTrigonIntersect(Point a, Point b, Point c, Point n, Point m, size_t dimensions = 3) {
 		return countProjectionTrigonEdgeIntersections(a, b, c, n, m, dimensions) == (dimensions * (dimensions - 1) / 2);
 	}
+
+	bool doEdgePlainIntersect(Point A, Point B, Point C, Point D, Point n, Point m, size_t dimensions = 3) {
+		bool Half1 = doEdgeTrigonIntersect(A, B, C, n, m, dimensions);
+		bool Half2 = doEdgeTrigonIntersect(A, D, C, n, m, dimensions);
+
+		return Half1 || Half2;
+	}
+
+	/*
+	int onWhichSideWhenIntersecting(Point A, Point B, Point C, Point D, Point n, Point m, double d, size_t dimensions = 3) {
+		Point extrapolatedPoint;
+		for (size_t i = 0; i < dimensions; i++) {
+			// n -> m
+			extrapolatedPoint.dim.push_back( linearExtrapolation(n.dim[i], m.dim[i], d) );
+		}
+
+		std::cout << "INTERSECTING: " << doEdgePlainIntersect(A, B, C, D, n, m, dimensions) << std::endl;
+
+		for (size_t dim = 0; dim < dimensions; dim++) {
+			for (size_t dim1 = dim+1; dim1 < dimensions; dim1++) {
+				D2Point pN = D2Point(n.dim[dim], n.dim[dim1]);
+				D2Point pM = D2Point(m.dim[dim], m.dim[dim1]);
+
+				D2Point pA = D2Point(A.dim[dim], A.dim[dim1]);
+				D2Point pB = D2Point(B.dim[dim], B.dim[dim1]);
+				D2Point pC = D2Point(C.dim[dim], C.dim[dim1]);
+				D2Point pD = D2Point(D.dim[dim], D.dim[dim1]);
+
+			}
+		}
+
+		for (size_t i = 0; i < extrapolatedPoint.dim.size(); i++) {
+			std::cout << i << ": " << extrapolatedPoint.dim[i] << std::endl;
+		}
+
+		return 0;
+	}
+	*/
+}
 }

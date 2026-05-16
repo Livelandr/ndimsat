@@ -1,47 +1,85 @@
 ﻿#include <iostream>
 #include <fstream>
 #include <vector>
+#include <cmath>
 
-#include "ndimintersections.hpp"
+#include "models.hpp"
+#include "collision.hpp"
+
+
+void spawn4DHyperSphere(NDSAT::Models::Model& mdl, double radiusOuter, double radiusInner, double wOffset, int rings, int sectors) {
+    int zeroVertex = static_cast<int>(mdl.verticies.size());
+
+    double pi = std::acos(-1.0);
+    int sphereSize = (rings + 1) * (sectors + 1);
+
+    for (int r = 0; r <= rings; ++r) {
+        double phi = pi * double(r) / double(rings);
+        double y = radiusOuter * std::cos(phi);
+        double sinPhi = std::sin(phi);
+
+        for (int s = 0; s <= sectors; ++s) {
+            double theta = 2.0 * pi * double(s) / double(sectors);
+            double x = radiusOuter * sinPhi * std::cos(theta);
+            double z = radiusOuter * sinPhi * std::sin(theta);
+            mdl.addVertex(NDSAT::Point(x, y, z, 0.0));
+        }
+    }
+
+    for (int r = 0; r <= rings; ++r) {
+        double phi = pi * double(r) / double(rings);
+        double y = radiusInner * std::cos(phi);
+        double sinPhi = std::sin(phi);
+
+        for (int s = 0; s <= sectors; ++s) {
+            double theta = 2.0 * pi * double(s) / double(sectors);
+            double x = radiusInner * sinPhi * std::cos(theta);
+            double z = radiusInner * sinPhi * std::sin(theta);
+            mdl.addVertex(NDSAT::Point(x, y, z, wOffset));
+        }
+    }
+
+    for (int r = 0; r < rings; ++r) {
+        for (int s = 0; s < sectors; ++s) {
+
+            int p0_out = zeroVertex + r * (sectors + 1) + s;
+            int p1_out = p0_out + 1;
+            int p2_out = zeroVertex + (r + 1) * (sectors + 1) + s;
+            int p3_out = p2_out + 1;
+
+            int p0_in = p0_out + sphereSize;
+            int p1_in = p1_out + sphereSize;
+            int p2_in = p2_out + sphereSize;
+            int p3_in = p3_out + sphereSize;
+
+            mdl.addEdge(p0_out, p1_out);
+            mdl.addEdge(p0_out, p2_out);
+
+            mdl.addEdge(p0_in, p1_in);
+            mdl.addEdge(p0_in, p2_in);
+        }
+    }
+
+    for (int i = 0; i < sphereSize; ++i) {
+        mdl.addEdge(zeroVertex + i, zeroVertex + i + sphereSize);
+    }
+}
 
 int main()
 {
+    // Radians
+    double rotation = 3.14159;
 
-	// 3D intersection
-	{
-		NDSAT::Point a(0, 0, 0), b(10, 0, 0), c(5, 10, 0);
-		NDSAT::Point n(5, 5, -5), m(5, 5, 5);
+    NDSAT::Models::Model mdl;
 
-		std::cout << "3D PLANE INTERSECTION 1: " << std::boolalpha << NDSAT::doEdgeTrigonIntersect(a, b, c, n, m) << " ";
-		std::cout << NDSAT::countProjectionTrigonEdgeIntersections(a, b, c, n, m) << "/" << (3) << std::endl;
-	}
+    spawn4DHyperSphere(mdl, 6, 3, 5, 16, 16);
 
-	// 3D non intersection
-	{
-		NDSAT::Point a(0, 0, 0), b(10, 0, 0), c(5, 10, 0);
-		NDSAT::Point n(5, 5, 10), m(6, 6, 15);
+    mdl.rotateObject(2, 3, rotation);
 
-		std::cout << "3D PLANE NON-INTERSECTION: " << std::boolalpha << NDSAT::doEdgeTrigonIntersect(a, b, c, n, m) << " ";
-		std::cout << NDSAT::countProjectionTrigonEdgeIntersections(a, b, c, n, m) << "/" << (3) << std::endl;
-	}
+    mdl.perspectiveProjectionDecrement(6, 4);
 
-	// 4D intersection
-	{
-		NDSAT::Point a(0, 0, 0, 5), b(10, 0, 0, 5), c(5, 10, 0, 5);
-		NDSAT::Point n(5, 5, -5, 5), m(5, 5, 5, 5);
-
-		std::cout << "4D PLANE INTERSECTION: " << std::boolalpha << NDSAT::doEdgeTrigonIntersect(a, b, c, n, m, 4) << " ";
-		std::cout << NDSAT::countProjectionTrigonEdgeIntersections(a, b, c, n, m, 4) << "/" << (4 * 3 / 2) << std::endl;
-	}
-
-	// 4D non intersection, intersects in 3D, but in wrong W
-	{
-		NDSAT::Point a(0, 0, 0, 0), b(10, 0, 0, 0), c(5, 10, 0, 0);
-		NDSAT::Point n(5, 5, -5, 10), m(5, 5, 5, 10);
-
-		std::cout << "4D PLANE NON-INTERSECTION: " << std::boolalpha << NDSAT::doEdgeTrigonIntersect(a, b, c, n, m, 4) << " ";
-		std::cout << NDSAT::countProjectionTrigonEdgeIntersections(a, b, c, n, m, 4) << "/" << (4 * 3 / 2) << std::endl;
-	}
-
+    std::string name = "hypersphere" + std::to_string(i) + ".obj";
+    mdl.exportToOBJ(name);
+    
 	return 0;
 }
