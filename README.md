@@ -11,6 +11,12 @@ No vibecoding (excluding tesseracts mappings, i would go insane doing it myself)
 Here some stuff generated with it (ported in blender for animation).
 
 ## Tesseract
+Classical projection
+
+
+https://github.com/user-attachments/assets/b257c5c9-feac-41b1-8ead-cf01141ad779
+
+
 W axis rotation with direct projection
 
 
@@ -22,11 +28,6 @@ W axis rotation with slicing
 
 https://github.com/user-attachments/assets/bc206470-33d8-44cd-9d65-3dcff061e1ef
 
-
-Classical projection
-
-
-https://github.com/user-attachments/assets/b257c5c9-feac-41b1-8ead-cf01141ad779
 
 
 # Hypersphere (3-sphere)
