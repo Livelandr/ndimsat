@@ -6,6 +6,8 @@ It has basic n-d object manipulations such as scale, move, rotation.
 Also have functions as perspective projections and dimension collapse.
 Works only with trigons for now.
 
+No vibecoding (excluding tesseracts mappings, i would go insane doing it myself), everything is reinvented by me from scratch.
+
 Here some stuff generated with it (ported in blender for animation).
 
 ## Tesseract
