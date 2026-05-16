@@ -35,5 +35,13 @@ https://github.com/user-attachments/assets/08886ed5-b25c-4986-8da9-0d35404d401c
 
 https://github.com/user-attachments/assets/079b8f4a-a38a-4ce4-8237-d084169022e7
 
+# Newell's ---===HYPERTEAPOT=====---
+
+
+https://github.com/user-attachments/assets/1d393150-261b-4e99-9721-591bc1e33e6c
+
+
+
+
 
 Also works with 5D and ND objects, but visualisations are scary.
